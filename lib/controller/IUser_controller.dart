@@ -1,3 +1,3 @@
 abstract class IUserController {
-  bool checkUserName(String? userName);
+  bool checkUserName(String userName);
 }

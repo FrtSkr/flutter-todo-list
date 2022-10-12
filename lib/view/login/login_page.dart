@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:social_media_project/controller/IUser_controller.dart';
+import 'package:social_media_project/controller/user_controller.dart';
 import 'package:social_media_project/padding_values.dart';
 import 'package:social_media_project/progress_indicator.dart';
 
@@ -13,13 +15,15 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> with ProgressIndicatorView, PaddingValues {
   bool _isLoging = false;
-  TextEditingController? _userController;
+  TextEditingController? _textController;
+  IUserController? _userController;
   final String _imgPath = "lib/assets/bkg.jpg";
   final String _labelText = "User Name";
   final String _buttonText = "Login";
   @override
   void initState() {
-    _userController = TextEditingController();
+    _textController = TextEditingController();
+    _userController = UserController();
     super.initState();
   }
 
@@ -47,7 +51,7 @@ class _LoginPageState extends State<LoginPage> with ProgressIndicatorView, Paddi
           Padding(
             padding: PaddingValues().PD_TLR_10,
             child: TextField(
-                controller: _userController,
+                controller: _textController,
                 cursorColor: Colors.white,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
@@ -61,9 +65,36 @@ class _LoginPageState extends State<LoginPage> with ProgressIndicatorView, Paddi
             child: OutlinedButton(
                 onPressed: () {
                   changedIsLoging();
-                  print(_userController?.text);
-                  //TODO: create user login controller
-                  // changedIsLoging();
+                  if (_userController?.checkUserName(_textController?.text.trim() ?? '') ?? false) {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                              title: const Text("Loading..."),
+                              content: Text("${_textController?.text.trim() ?? ''}: Kullanıcı Bulundu!!!"),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context, 'OK');
+                                    },
+                                    child: const Text("OK")),
+                              ],
+                            ));
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                              title: const Text("Error"),
+                              content: Text("${_textController?.text.trim() ?? ''}: Kullanıcı Bulunamadı!!!"),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context, 'OK');
+                                    },
+                                    child: const Text("OK")),
+                              ],
+                            ));
+                  }
+                  changedIsLoging();
                 },
                 child: Padding(
                   padding: PaddingValues().PD_ALL_10,
