@@ -1,1 +1,1 @@
-enum services { users }
+enum services { users, todos }
