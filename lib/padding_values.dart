@@ -7,4 +7,5 @@ class PaddingValues {
   final EdgeInsets PD_R_10 = const EdgeInsets.only(right: 10);
   final EdgeInsets PD_TLR_10 = const EdgeInsets.only(top: 10, right: 10, left: 10);
   final EdgeInsets PD_ALL_10 = const EdgeInsets.all(10.0);
+  final EdgeInsets PD_B_5 = const EdgeInsets.only(bottom: 5.0);
 }
