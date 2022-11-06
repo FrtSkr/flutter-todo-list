@@ -6,6 +6,7 @@ import 'package:todo_list/controller/user_controller.dart';
 import 'package:todo_list/padding_values.dart';
 import 'package:todo_list/progress_indicator.dart';
 import 'package:todo_list/view/home/home_page.dart';
+import 'package:todo_list/view/main_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -76,7 +77,7 @@ class _LoginPageState extends State<LoginPage> with ProgressIndicatorView, Paddi
                 onPressed: () {
                   changedIsLoging();
                   if (_userController?.checkUserName(_textController?.text.trim() ?? '') ?? false) {
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainPage()));
                   } else {
                     showDialog(
                         context: context,
