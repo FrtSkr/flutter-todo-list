@@ -25,8 +25,8 @@ class _HomePageState extends State<HomePage> with CustomColors, TickerProviderSt
       child: Scaffold(
         extendBody: true,
         floatingActionButton: FloatingActionButton(
-          backgroundColor: CustomColors().lightSeaGreen,
-          foregroundColor: CustomColors().white,
+          backgroundColor: lightSeaGreen,
+          foregroundColor: white,
           child: const Icon(Icons.add_outlined),
           onPressed: () {},
         ),
@@ -34,30 +34,12 @@ class _HomePageState extends State<HomePage> with CustomColors, TickerProviderSt
         bottomNavigationBar: BottomAppBar(
           notchMargin: HomePageDoubleValues.notchValue,
           shape: const CircularNotchedRectangle(),
-          child: TabBar(
-            indicatorColor: CustomColors().white,
-            indicatorSize: TabBarIndicatorSize.label,
-            labelColor: CustomColors().lightSeaGreen,
-            unselectedLabelColor: CustomColors().dimGray,
-            labelStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
-                  fontSize: HomePageDoubleValues.selectedFontSize,
-                ),
-            unselectedLabelStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
-                  fontSize: HomePageDoubleValues.unselectedFontSize,
-                ),
-            controller: _tabController,
-            tabs: [
-              Tab(
-                iconMargin: PaddingValues().PD_B_5,
-                text: _BottomNavItems.Home.name,
-                icon: const Icon(Icons.home_outlined),
-              ),
-              Tab(
-                iconMargin: PaddingValues().PD_B_5,
-                text: _BottomNavItems.Profile.name,
-                icon: const Icon(Icons.person_outline),
-              )
-            ],
+          child: CustomTabBar(
+            indicatorColor: white,
+            labelColor: lightSeaGreen,
+            unselectedLabelColor: dimGray,
+            tabController: _tabController,
+            iconMargin: PD_B_5,
           ),
         ),
         body: TabBarView(controller: _tabController, children: [
@@ -69,6 +51,53 @@ class _HomePageState extends State<HomePage> with CustomColors, TickerProviderSt
           ),
         ]),
       ),
+    );
+  }
+}
+
+class CustomTabBar extends StatelessWidget {
+  const CustomTabBar({
+    Key? key,
+    required this.indicatorColor,
+    required this.labelColor,
+    required this.unselectedLabelColor,
+    required TabController tabController,
+    required this.iconMargin,
+  })  : _tabController = tabController,
+        super(key: key);
+
+  final Color indicatorColor;
+  final Color labelColor;
+  final Color unselectedLabelColor;
+  final TabController _tabController;
+  final EdgeInsets iconMargin;
+
+  @override
+  Widget build(BuildContext context) {
+    return TabBar(
+      indicatorColor: indicatorColor,
+      indicatorSize: TabBarIndicatorSize.label,
+      labelColor: labelColor,
+      unselectedLabelColor: unselectedLabelColor,
+      labelStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
+            fontSize: HomePageDoubleValues.selectedFontSize,
+          ),
+      unselectedLabelStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
+            fontSize: HomePageDoubleValues.unselectedFontSize,
+          ),
+      controller: _tabController,
+      tabs: [
+        _TabItems(_BottomNavItems.Home.name, const Icon(Icons.home_outlined)),
+        _TabItems(_BottomNavItems.Profile.name, const Icon(Icons.person_outline)),
+      ],
+    );
+  }
+
+  Tab _TabItems(String? text, Widget? icon) {
+    return Tab(
+      iconMargin: iconMargin,
+      text: text,
+      icon: icon,
     );
   }
 }
