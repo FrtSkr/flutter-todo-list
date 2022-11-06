@@ -1,4 +1,4 @@
-# social_media_project
+# Todo List
 
 A new Flutter project.
 

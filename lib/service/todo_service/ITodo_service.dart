@@ -1,4 +1,4 @@
-import 'package:social_media_project/model/todo_model.dart';
+import 'package:todo_list/model/todo_model.dart';
 
 abstract class ITodoService {
   Future<List<TodoModel>?> getAllTodos();

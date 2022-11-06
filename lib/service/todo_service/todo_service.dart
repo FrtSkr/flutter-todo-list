@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:social_media_project/model/todo_model.dart';
-import 'package:social_media_project/service/services_enm.dart';
-import 'package:social_media_project/service/todo_service/ITodo_service.dart';
+import 'package:todo_list/model/todo_model.dart';
+import 'package:todo_list/service/services_enm.dart';
+import 'package:todo_list/service/todo_service/ITodo_service.dart';
 
 class TodoService extends ITodoService {
   final String baseUrl = "https://jsonplaceholder.typicode.com/";

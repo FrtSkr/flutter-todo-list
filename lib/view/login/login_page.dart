@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:social_media_project/controller/IUser_controller.dart';
-import 'package:social_media_project/controller/user_controller.dart';
-import 'package:social_media_project/padding_values.dart';
-import 'package:social_media_project/progress_indicator.dart';
+import 'package:todo_list/controller/IUser_controller.dart';
+import 'package:todo_list/controller/user_controller.dart';
+import 'package:todo_list/padding_values.dart';
+import 'package:todo_list/progress_indicator.dart';
+import 'package:todo_list/view/home/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -34,11 +35,20 @@ class _LoginPageState extends State<LoginPage> with ProgressIndicatorView, Paddi
   }
 
   @override
+  void dispose() {
+    _textController?.dispose();
+    _userController = null;
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: _isLoging ? ProgressIndicatorView().circularProgressIndicator() : const SizedBox.shrink(),
+        actions: [
+          _isLoging ? ProgressIndicatorView().circularProgressIndicator() : const SizedBox.shrink(),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,19 +76,7 @@ class _LoginPageState extends State<LoginPage> with ProgressIndicatorView, Paddi
                 onPressed: () {
                   changedIsLoging();
                   if (_userController?.checkUserName(_textController?.text.trim() ?? '') ?? false) {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                              title: const Text("Loading..."),
-                              content: Text("${_textController?.text.trim() ?? ''}: Kullanıcı Bulundu!!!"),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context, 'OK');
-                                    },
-                                    child: const Text("OK")),
-                              ],
-                            ));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
                   } else {
                     showDialog(
                         context: context,

@@ -1,6 +1,6 @@
 {
-    "name": "social_media_project",
-    "short_name": "social_media_project",
+    "name": "todo_list",
+    "short_name": "todo_list",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
