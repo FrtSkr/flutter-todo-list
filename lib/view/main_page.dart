@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/view/profile/profile_page.dart';
 
 import '../padding_values.dart';
 import '../project_colors.dart';
+import 'home/home_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -43,13 +45,9 @@ class _MainPageState extends State<MainPage> with CustomColors, TickerProviderSt
             iconMargin: PD_B_5,
           ),
         ),
-        body: TabBarView(controller: _tabController, children: [
-          Container(
-            color: Colors.red,
-          ),
-          Container(
-            color: Colors.white,
-          ),
+        body: TabBarView(controller: _tabController, children: const [
+          HomePage(),
+          ProfilePage(),
         ]),
       ),
     );
