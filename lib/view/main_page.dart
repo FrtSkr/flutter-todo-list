@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/core/constants/double_values.dart';
 import 'package:todo_list/view/profile/profile_page.dart';
 
+import '../core/components/custom_tab_bar.dart';
 import '../padding_values.dart';
 import '../project_colors.dart';
 import 'home/home_page.dart';
@@ -14,11 +16,22 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> with CustomColors, TickerProviderStateMixin, PaddingValues {
   late final TabController _tabController;
+  late final List<Widget> _tabs;
 
   @override
   void initState() {
     _tabController = TabController(length: _BottomNavItems.values.length, vsync: this);
+    _tabs = [
+      Tab(text: _BottomNavItems.Home.name, icon: const Icon(Icons.home_outlined), iconMargin: PD_B_5),
+      Tab(text: _BottomNavItems.Profile.name, icon: const Icon(Icons.person_outline), iconMargin: PD_B_5),
+    ];
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -35,14 +48,11 @@ class _MainPageState extends State<MainPage> with CustomColors, TickerProviderSt
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
-          notchMargin: MainPageDoubleValues.notchValue,
+          notchMargin: DoubleValues.notchValue,
           shape: const CircularNotchedRectangle(),
           child: CustomTabBar(
-            indicatorColor: white,
-            labelColor: lightSeaGreen,
-            unselectedLabelColor: dimGray,
             tabController: _tabController,
-            iconMargin: PD_B_5,
+            tabs: _tabs,
           ),
         ),
         body: TabBarView(controller: _tabController, children: const [
@@ -54,57 +64,4 @@ class _MainPageState extends State<MainPage> with CustomColors, TickerProviderSt
   }
 }
 
-class CustomTabBar extends StatelessWidget {
-  const CustomTabBar({
-    Key? key,
-    required this.indicatorColor,
-    required this.labelColor,
-    required this.unselectedLabelColor,
-    required TabController tabController,
-    required this.iconMargin,
-  })  : _tabController = tabController,
-        super(key: key);
-
-  final Color indicatorColor;
-  final Color labelColor;
-  final Color unselectedLabelColor;
-  final TabController _tabController;
-  final EdgeInsets iconMargin;
-
-  @override
-  Widget build(BuildContext context) {
-    return TabBar(
-      indicatorColor: indicatorColor,
-      indicatorSize: TabBarIndicatorSize.label,
-      labelColor: labelColor,
-      unselectedLabelColor: unselectedLabelColor,
-      labelStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
-            fontSize: MainPageDoubleValues.selectedFontSize,
-          ),
-      unselectedLabelStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
-            fontSize: MainPageDoubleValues.unselectedFontSize,
-          ),
-      controller: _tabController,
-      tabs: [
-        _TabItems(_BottomNavItems.Home.name, const Icon(Icons.home_outlined)),
-        _TabItems(_BottomNavItems.Profile.name, const Icon(Icons.person_outline)),
-      ],
-    );
-  }
-
-  Tab _TabItems(String? text, Widget? icon) {
-    return Tab(
-      iconMargin: iconMargin,
-      text: text,
-      icon: icon,
-    );
-  }
-}
-
 enum _BottomNavItems { Home, Profile }
-
-class MainPageDoubleValues {
-  static double selectedFontSize = 15.0;
-  static double unselectedFontSize = 12.0;
-  static double notchValue = 10.0;
-}
