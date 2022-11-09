@@ -5,7 +5,7 @@ import '../constants/double_values.dart';
 
 class CustomTabBar extends StatelessWidget with CustomColors implements PreferredSizeWidget {
   final double _kTabHeight = 46.0;
-  final double indicatorWeight = 2.0;
+  final double _indicatorWeight = 2.0;
   CustomTabBar({
     Key? key,
     required TabController tabController,
@@ -43,6 +43,6 @@ class CustomTabBar extends StatelessWidget with CustomColors implements Preferre
         maxHeight = math.max(itemHeight, maxHeight);
       }
     }
-    return Size.fromHeight(maxHeight + indicatorWeight);
+    return Size.fromHeight(maxHeight + _indicatorWeight);
   }
 }
