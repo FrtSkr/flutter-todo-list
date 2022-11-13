@@ -17,17 +17,22 @@ class UserController extends IUserController {
   }
 
   @override
-  bool checkUserName(String userName) {
-    bool result;
-    print("User Leng: ${_users?.length}");
+  List checkUserName(String userName) {
+    bool _isThere;
+    UserModel? _user;
+    List _result = [];
     try {
       if (_users != null && userName.isNotEmpty) {
-        result = _users?.any((user) => user.username == userName ? true : false) ?? false;
-        return result;
+        _isThere = _users?.any((user) => user.username == userName ? true : false) ?? false;
+        _user = _users?.firstWhere((element) => element.username == userName);
+        _result.add(_isThere);
+        _result.add(_user);
+
+        return _result;
       }
     } catch (e) {
       print(e);
     }
-    return false;
+    return _result;
   }
 }
