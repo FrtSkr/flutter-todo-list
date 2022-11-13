@@ -76,8 +76,14 @@ class _LoginPageState extends State<LoginPage> with ProgressIndicatorView, Paddi
             child: OutlinedButton(
                 onPressed: () {
                   changedIsLoging();
-                  if (_userController?.checkUserName(_textController?.text.trim() ?? '') ?? false) {
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainPage()));
+                  List _result = _userController?.checkUserName(_textController?.text.trim() ?? '') ?? [];
+                  if (_result.isNotEmpty && _result[0]) {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MainPage(
+                                  user: _result[1],
+                                )));
                   } else {
                     showDialog(
                         context: context,

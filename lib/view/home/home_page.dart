@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/core/components/custom_tab_bar.dart';
+import 'package:todo_list/model/user_model.dart';
 import 'package:todo_list/padding_values.dart';
 import 'package:todo_list/project_colors.dart';
 import 'package:todo_list/view/tabBarViews/done_page.dart';
 import 'package:todo_list/view/tabBarViews/inProgress_page.dart';
-import 'package:todo_list/view/tabBarViews/todo_screen.dart';
+import 'package:todo_list/view/tabBarViews/todo_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  HomePage({super.key, required this.user});
+  UserModel? user;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -49,9 +51,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Padd
           bottom: CustomTabBar(tabController: _tabController, tabs: _tabs),
         ),
         body: TabBarView(controller: _tabController, children: [
-          const ToDoPage(),
-          const InProgressPage(),
-          const DonePage(),
+          ToDoPage(
+            user: widget.user,
+          ),
+          InProgressPage(),
+          DonePage(),
         ]),
       ),
     );

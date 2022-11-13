@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/core/constants/double_values.dart';
+import 'package:todo_list/model/user_model.dart';
 import 'package:todo_list/view/profile/profile_page.dart';
 
 import '../core/components/custom_tab_bar.dart';
@@ -8,8 +9,8 @@ import '../project_colors.dart';
 import 'home/home_page.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
-
+  MainPage({super.key, required this.user});
+  UserModel? user;
   @override
   State<MainPage> createState() => _MainPageState();
 }
@@ -55,10 +56,16 @@ class _MainPageState extends State<MainPage> with CustomColors, TickerProviderSt
             tabs: _tabs,
           ),
         ),
-        body: TabBarView(controller: _tabController, children: const [
-          HomePage(),
-          ProfilePage(),
-        ]),
+        body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: _tabController,
+          children: [
+            HomePage(
+              user: widget.user,
+            ),
+            ProfilePage(),
+          ],
+        ),
       ),
     );
   }
