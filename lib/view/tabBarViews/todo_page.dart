@@ -49,12 +49,18 @@ class _ToDoPageState extends State<ToDoPage> with ProgressIndicatorView, CustomC
               itemBuilder: (context, index) {
                 return Card(
                   child: ListTile(
+                      trailing: Icon(
+                        _todoItems?[index].completed ?? false ? Icons.check_circle_rounded : Icons.highlight_off_rounded,
+                        color: _todoItems?[index].completed ?? false ? green : red,
+                      ),
                       title: Text(
-                    _todoItems?[index].title ?? '',
-                    style: Theme.of(context).textTheme.headline6?.copyWith(
-                          color: _todoItems?[index].completed ?? false ? lightSeaGreen : red,
-                        ),
-                  )),
+                        _todoItems?[index].title ?? '',
+                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                              color: white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      )),
                 );
               })
           : Center(child: circularProgressIndicator()),
